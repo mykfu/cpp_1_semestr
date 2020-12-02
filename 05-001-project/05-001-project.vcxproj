@@ -155,6 +155,7 @@
     <ClCompile Include="Lesson_07.cpp" />
     <ClCompile Include="Lesson_08.cpp" />
     <ClCompile Include="Lesson_09.cpp" />
+    <ClCompile Include="Lesson_10.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

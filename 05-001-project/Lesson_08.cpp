@@ -64,8 +64,9 @@ void print(string* strs, int& size) {
 	cout << "[";
 	for (int i = 0; i < size; i++)
 	{
-		cout << strs[i] << (i < size - 1 ? ", " : "]\n");
+		cout << strs[i] << (i < size - 1 ? ", " : "");
 	}
+	cout << "]\n";
 }
 
 int compareStrings(const string& left, const string& right) {
@@ -124,7 +125,7 @@ bool binary_search(string& findMe, string*& arr, int length) {
 	return false;
 }
 
-string* generateWords(string& in, int& size) {
+string* generateWords(string& in, string& out, int& size) {
 	add(history, histSize, in);
 	string abc = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
 	int count = 0;
@@ -133,41 +134,67 @@ string* generateWords(string& in, int& size) {
 	for (int i = 0; i < in.size(); i++)
 	{
 		string current = in;
-		for (int j = 0; j < abc.length(); j++)
-		{
-			current[i] = abc[j];
-			//current.replace(i, 1, abc.substr(j, 1));
-			if (current != in && binary_search(current, dict, dictLength)) {
-				add(result, size, current);
+		if (current[i] != out[i]) {
+			for (int j = 0; j < abc.length(); j++)
+			{
+				current[i] = abc[j];
+				//current.replace(i, 1, abc.substr(j, 1));
+				if (current != in &&
+					!in_array(current, history, histSize)
+					&& binary_search(current, dict, dictLength)) {
+					add(result, size, current);
+					add(history, histSize, current);
+				}
 			}
 		}
 	}
 	return result;
 }
 
-void game(string& in, string& out) {
+bool found = false;
 
-	if (in == out) return;
+void game(string& in, string& out, string* chain, int chain_length) {
+
+	if (in == out) {
+		cout << out << endl;
+		add(chain, chain_length, in);
+		cout << "Цепочка найдена!\n";
+		found = true;
+		print(chain, chain_length);
+		cout << "Размер цепочки = " << chain_length << endl;
+		return;
+	}
 
 	cout << in << ": ";
 
 	int size = 0;
 
-	add(history, histSize, in);
-	string* newWords = generateWords(in, size);
+	string* newWords = generateWords(in, out, size);
+
+	if (size > 0) {
+		add(chain, chain_length, in);
+	}
+	
 	print(newWords, size);
 
 	for (int i = 0; i < size; i++)
 	{
-		if (!in_array(newWords[i], history, histSize)) {
-			game(newWords[i], out);
+		if (!found) {
+			game(newWords[i], out, chain, chain_length);
 		}
 	}
 
 }
 
+void game(string& in, string& out) {
 
-int main() {
+	string* chain = new string[0];
+	int chain_length = 0;
+
+	game(in, out, chain, chain_length);
+}
+
+int main7() {
 	readDictionary("dict_len4_ansi.txt");
 
 	string in = "стук";
