@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <algorithm>
 
 using namespace std;
 //
@@ -157,7 +158,7 @@ int main6() {
 	else
 		cout << "NOT FOUND!!!\n";
 
-	string* strs = new string[]{ "asdf", "asd", "fd", "123" };
+	string* strs = new string[4]{ "asdf", "asd", "fd", "123" };
 
 	if (in_array(string("fd"), strs, length))
 		cout << "FOUND!!!\n";
@@ -173,14 +174,14 @@ int main6() {
 		cout << "NOT FOUND!!!\n";
 
 	cout << "binary_search string(fd):\n";
-	string* strs2 = new string[]{ "123", "asd", "asdf", "fd", "kll"};
+	string* strs2 = new string[5]{ "123", "asd", "asdf", "fd", "kll"};
 	if (binary_search(string("fd"), strs2, length))
 		cout << "FOUND!!!\n";
 	else
 		cout << "NOT FOUND!!!\n";
 
 	cout << "binary_search string(ёж):\n";
-	string* strs3 = new string[]{ "ее", "её", "ёж", "ёлки", "стол"};
+	string* strs3 = new string[5]{ "ее", "её", "ёж", "ёлки", "стол"};
 	if (binary_search(string("ёж"), strs3, length))
 		cout << "FOUND!!!\n";
 	else

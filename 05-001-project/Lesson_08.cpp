@@ -1,6 +1,7 @@
 #include<iostream>
 #include<fstream>
 #include<string>
+#include <algorithm>
 
 using namespace std;
 
@@ -153,6 +154,8 @@ string* generateWords(string& in, string& out, int& size) {
 
 bool found = false;
 
+void bubbleSort(string by, string*& arr, int length);
+
 void game(string& in, string& out, string* chain, int chain_length) {
 
 	if (in == out) {
@@ -170,6 +173,7 @@ void game(string& in, string& out, string* chain, int chain_length) {
 	int size = 0;
 
 	string* newWords = generateWords(in, out, size);
+	bubbleSort(out, newWords, size);
 
 	if (size > 0) {
 		add(chain, chain_length, in);
@@ -194,11 +198,11 @@ void game(string& in, string& out) {
 	game(in, out, chain, chain_length);
 }
 
-int main7() {
+int main() {
 	readDictionary("dict_len4_ansi.txt");
 
-	string in = "стук";
-	string out = "слон";
+	string in = "аист";
+	string out = "джип";
 
 	game(in, out);
 
