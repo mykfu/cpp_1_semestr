@@ -6,7 +6,7 @@ void swap(int& a, int& b) {
 	b = a;
 	a = t;
 }
-
+ 
 void bubbleSort(int*& arr, int length) {
 	for (int i = 0; i < length - 1; i++)
 	{
