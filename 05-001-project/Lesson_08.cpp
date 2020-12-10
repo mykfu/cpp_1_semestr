@@ -2,6 +2,8 @@
 #include<fstream>
 #include<string>
 #include <algorithm>
+#include <queue>
+#include <stack>
 
 using namespace std;
 
@@ -198,13 +200,98 @@ void game(string& in, string& out) {
 	game(in, out, chain, chain_length);
 }
 
+struct Pair
+{
+	string parent;
+	string child;
+};
+
+void reverse(queue<string>& que) {
+	stack<string> stk;
+
+	while (!que.empty()) {
+		string current = que.front();
+		que.pop();
+		stk.push(current);
+	}
+
+	while (!stk.empty()) {
+		string current = stk.top();
+		stk.pop();
+		que.push(current);
+	}
+}
+
+
+void gameBFS(string& in, string& out) {
+	
+	queue<string> que;
+	que.push(in);
+
+	vector<Pair> result;
+
+	while (!que.empty()) {
+		string current = que.front();
+		que.pop();
+
+		if (current == out) {
+			cout << out << endl;
+			cout << "Цепочка найдена!\n";
+			found = true;
+			queue<string> ans;
+			ans.push(out);
+			string cur = out;
+			for (int i = 0; i < result.size() && cur != in; i++)
+			{
+				if (result.at(i).child == cur) {
+					ans.push(cur = result.at(i).parent);
+					i = 0;
+				}
+			}
+
+			ans.push(in);
+			reverse(ans);
+
+			cout << "Размер цепочки = " << ans.size() << endl;
+
+			while (!ans.empty()) {
+				string current2 = ans.front();
+				ans.pop();
+				cout << " " << current2;
+			}
+			cout << endl;
+
+			return;
+		}
+
+
+		int size = 0;
+		string* newWords = generateWords(current, out, size);
+		bubbleSort(out, newWords, size);
+
+		cout << current << ": ";
+		print(newWords, size);
+
+
+		for (int i = 0; i < size; i++)
+		{
+			que.push(newWords[i]);
+			Pair p = { current, newWords[i] };
+			result.push_back(p);
+		}
+	}
+
+
+}
+
 int main() {
 	readDictionary("dict_len4_ansi.txt");
 
-	string in = "аист";
-	string out = "джип";
+	string in = "муха";
+	string out = "слон";
 
-	game(in, out);
+	//game(in, out);
+	gameBFS(in, out);
 
 
 	return 0;

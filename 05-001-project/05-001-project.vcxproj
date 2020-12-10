@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="05-001-project.cpp" />
     <ClCompile Include="CW1-Ans.cpp" />
+    <ClCompile Include="Lesson11.cpp" />
     <ClCompile Include="Lesson_04.cpp" />
     <ClCompile Include="Lesson_05.cpp" />
     <ClCompile Include="Lesson_06.cpp" />
